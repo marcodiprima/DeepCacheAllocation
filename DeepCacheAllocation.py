@@ -5,8 +5,6 @@ from gym import spaces
 
 MAX_CACHE_CAPACITY = 30  # cache capacity - limited to 30
 
-
-
 class DeepCacheNetw(gym.Env):
     """Deep QN Environment for Cache Allocation"""
     metadata = {'render.modes': ['human']}
@@ -17,7 +15,7 @@ class DeepCacheNetw(gym.Env):
         self.x1 = initial_x1  # SP1
         self.x2 = MAX_CACHE_CAPACITY - initial_x1  # SP2
         self.reward_range = (-20, 0)  # -20 the worst case of all requests
-        self.action_space = spaces.Discrete(3)  # -1 0 1 action space range
+        self.action_space = spaces.Discrete(3,)  # -1 0 1 action space range
 
         print("x1 ", self.x1)
         print("x2 ", self.x2)
@@ -46,11 +44,10 @@ class DeepCacheNetw(gym.Env):
             print("legal action ", action)
 
         # Now, let's calculate the reward
-        rand_reqSP1 = np.random.randint(low=1, high=100, size=10)  # 10 random requests of sp1 (numbers from 1 to 100)
-        rand_reqSP2 = np.random.randint(low=1, high=100, size=10)  # 10 random requests of sp2 (numbers from 1 to 200)
+        rand_reqSP1 = np.random.randint(low=1, high=100, size=20)  # 10 random requests of sp1 (numbers from 1 to 100)
+        rand_reqSP2 = np.random.randint(low=1, high=100, size=90)  # 10 random requests of sp2 (numbers from 1 to 200)
 
         # everytime the requests is not in cache we increase the size of the instantaneous cost
-
         inst_cost = 0
 
         for req in rand_reqSP1:
@@ -74,7 +71,7 @@ class DeepCacheNetw(gym.Env):
 
     def reset(self):
         # Reset the state of the environment to an initial state
-        self.x1 = 3
+        self.x1 = 15
         self.x2 = MAX_CACHE_CAPACITY - self.x1
 
         observation = self.x1

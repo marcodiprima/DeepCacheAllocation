@@ -15,9 +15,16 @@ model = PPO('MlpPolicy', env, verbose=1)
 print("STARTING TO LEARN")
 model.learn(total_timesteps=5000)
 
-print("STARTING TO PREDICT")
+"""print("STARTING TO PREDICT")
 obs = env.reset()
 for i in range(100):
     action, _states = model.predict(obs, deterministic=True)
     obs, rewards, done, info = env.step(action)
-
+"""
+print("STARTING TO PREDICT")
+obs = env.reset()
+for time_step in range(100):
+    action, _states = model.predict(obs, deterministic=True)
+    obs, rewards, done, info = env.step(action)
+    if done:
+        obs = env.reset()
